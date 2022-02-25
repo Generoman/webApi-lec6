@@ -1,3 +1,5 @@
 /.idea/
 /lec6.iml
 node_modules/
+.parcel-cache/
+dist/
