@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { useLoader } from "./useLoader";
@@ -36,7 +36,42 @@ function FrontPage() {
 }
 
 function Login() {
-  return <h1>Login</h1>;
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetch("/api/login", {
+      method: "post",
+      body: JSON.stringify({ username, password }),
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h1>Login</h1>
+      <div>
+        Username:{" "}
+        <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+        />
+      </div>
+      <div>
+        Password:{" "}
+        <input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+        />
+      </div>
+      <div>
+        <button>Log in</button>
+      </div>
+    </form>
+  );
 }
 
 function Register() {
