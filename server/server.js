@@ -5,9 +5,14 @@ const app = express();
 
 app.get("/api/login", (req, res) => {
   function respond() {
-    res.json({ username: "admin", fullName: "Tøffetøffe Tøffetøff" });
+    if (req.user) {
+      const { username, fullName } = req.user;
+      return res.json({ username, fullName });
+    } else {
+      res.sendStatus(204);
+    }
   }
-  setTimeout(respond, 3000);
+  setTimeout(respond, 400);
 });
 
 app.use(express.static("../client/dist"));
