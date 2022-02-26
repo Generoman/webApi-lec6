@@ -4,7 +4,9 @@ export function useLoader(loadingFunc) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [data, setData] = useState();
-  useEffect(async () => {
+  useEffect(reload, []);
+
+  async function reload() {
     setLoading(true);
     try {
       setData(await loadingFunc());
@@ -14,7 +16,7 @@ export function useLoader(loadingFunc) {
       setLoading(false);
     }
     setLoading(false);
-  }, []);
+  }
 
-  return { loading, error, data };
+  return { loading, error, data, reload };
 }
